@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Горизонтальное меню</title>
+</head>
+<body>
+    <style>
+        .menu-container {
+            height: 50px;
+            overflow-x: scroll;
+            scrollbar-width: none;
+        }
+
+        .menu-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .menu-items a {
+            padding-right: 2rem;
+            white-space: nowrap;
+        }
+
+        .menu-items a:last-child {
+            padding-right: 0rem;
+        }
+    </style>
+    <div class="menu-container">
+        <div class="menu-items">
+            <a href="#">Item 1</a>
+            <a href="#">Item 2</a>
+            <a href="#">Item 3</a>
+            <a href="#">Item 4</a>
+            <a href="#">Item 5</a>
+            <a href="#">Item 6</a>
+        </div>
+    </div>
+    <h1>Меню с горизонтальным скроллом</h1>
+    <script>
+        var menuItems = document.querySelector(".menu-items");
+        var isDragging = false;
+        var lastClientX;
+
+        menuItems.addEventListener("mousedown", function(e) {
+            isDragging = true;
+            lastClientX = e.clientX;
+            menuItems.style.cursor = "grabbing";
+        });
+
+        menuItems.addEventListener("mousemove", function(e) {
+            if (isDragging) {
+                var deltaX = e.clientX - lastClientX;
+                menuItems.scrollLeft -= deltaX;
+                lastClientX = e.clientX;
+            }
+        });
+
+        menuItems.addEventListener("mouseup", function() {
+            isDragging = false;
+            menuItems.style.cursor = "grab";
+        });
+
+        menuItems.addEventListener("mouseleave", function() {
+            isDragging = false;
+            menuItems.style.cursor = "grab";
+        });
+    </script>
+</body>
+</html>
